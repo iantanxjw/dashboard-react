@@ -3,8 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@progress/kendo-drawing": "^1.5.7",
     "@progress/kendo-react-buttons": "^2.5.0",
+    "@progress/kendo-react-dialogs": "^2.5.0",
+    "@progress/kendo-react-inputs": "^2.5.0",
+    "@progress/kendo-react-intl": "^2.5.0",
     "@progress/kendo-react-layout": "^2.5.0",
+    "@progress/kendo-react-pdf": "^2.5.0",
     "@progress/kendo-theme-material": "^1.5.2",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",

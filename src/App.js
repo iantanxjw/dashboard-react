@@ -1,17 +1,45 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+
+import { Dialog, DialogActionsBar } from '@progress/kendo-react-dialogs';
+import { Input } from '@progress/kendo-react-inputs';
+
+import { Button } from '@progress/kendo-react-buttons';
+import { savePDF } from '@progress/kendo-react-pdf';
+
+import '@progress/kendo-theme-material/dist/all.css';
 import './App.css';
 
+
 class App extends Component {
+  constructor(props) {
+  super(props);
+  this.appContainer = React.createRef();
+  this.state = {
+    showDialog: false
+  }
+}
+
+handlePDFExport = () => {
+  savePDF(ReactDOM.findDOMNode(this.appContainer), { paperSize: 'auto' });
+}
+
+handleShare = () => {
+  this.setState({
+    showDialog: !this.state.showDialog
+  }, () => console.log(this.state))
+}
+
   render() {
     return (
-      <div className="app-container">
+      <div className="app-container" ref={(el) => this.appContainer = el}>
         <div className="row">
           <div className="col-xs-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
             <h1>Sales | Q4 2018</h1>
           </div>
-          <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
-            <button>Share</button>
-            <button>Export to PDF</button>
+          <div className="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 buttons-right">
+            <Button primary={true} onClick={this.handleShare}>Share</Button>
+            <Button onClick={this.handlePDFExport}>Export to PDF</Button>
           </div>
         </div>
         <div className="row">
@@ -46,7 +74,16 @@ class App extends Component {
             </div>
           </div>
         </div>
-        <h4 style={{display : 'none'}}>Dialog Shown/Hidden with Logic</h4>
+        {this.state.showDialog &&
+        <Dialog title={"Share this report"} onClose={this.handleShare}>
+          <p>Please enter the email address/es of the recipient/s.</p>
+          <Input placeholder="example@progress.com" />
+          <DialogActionsBar>
+            <Button primary={true} onClick={this.handleShare}>Share</Button>
+            <Button onClick={this.handleShare}>Cancel</Button>
+          </DialogActionsBar>
+        </Dialog>
+        }
       </div>
     );
   }
